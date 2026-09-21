@@ -426,7 +426,7 @@
             <div class="flex items-center justify-between">
               <label for="k-slider" class="text-sm font-bold text-white flex items-center gap-2">
                 <span>Value of K (Neighbors)</span>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-sky-400 border border-slate-700 font-mono">Odd Only</span>
+                <span id="k-parity-badge" class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-sky-400 border border-slate-700 font-mono transition-colors">Odd K</span>
               </label>
               <span id="k-slider-display" class="text-2xl font-black font-mono text-sky-400 px-3 py-1 bg-sky-950/60 rounded-xl border border-sky-500/40 shadow-inner">
                 5
@@ -438,7 +438,7 @@
               id="k-slider"
               min="1"
               max="25"
-              step="2"
+              step="1"
               value="5"
               class="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/40"
             />
@@ -446,20 +446,21 @@
             <!-- Step Marks -->
             <div class="flex justify-between text-[10px] font-mono text-slate-500 px-1">
               <span class="text-rose-400 font-semibold">1 (Tricked)</span>
+              <span class="text-amber-400 font-semibold">2 (Even ⚠️)</span>
               <span class="text-emerald-400 font-semibold">5 (&radic;25 ★)</span>
               <span>11</span>
-              <span>17</span>
               <span class="text-indigo-300 font-semibold">25 (Max = N)</span>
             </div>
 
             <!-- Fast Preset Pills -->
-            <div class="pt-2 flex items-center justify-between gap-1">
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-1.5">
               <span class="text-[11px] text-slate-400 font-medium">Jump to:</span>
-              <div class="flex gap-1.5">
-                <button data-k="1" class="k-preset-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-slate-700 transition">K=1</button>
-                <button data-k="5" class="k-preset-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 transition">K=5 ★</button>
+              <div class="flex flex-wrap gap-1.5">
+                <button data-k="1" class="k-preset-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-slate-700 transition" title="K=1 (Overfitting / Fooled by Outlier)">K=1</button>
+                <button data-k="2" class="k-preset-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-amber-950/70 hover:bg-amber-900 text-amber-300 border border-amber-700/80 transition" title="K=2 (Even K Tie Deadlock Demo)">K=2 ⚠️</button>
+                <button data-k="5" class="k-preset-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 transition" title="K=5 (Optimal √25 Sweet Spot)">K=5 ★</button>
                 <button data-k="11" class="k-preset-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 transition">K=11</button>
-                <button data-k="25" class="k-preset-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 border border-slate-700 transition">K=25</button>
+                <button data-k="25" class="k-preset-btn px-2.5 py-1 text-xs font-mono font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 border border-slate-700 transition" title="K=25 (Underfitting / K=N)">K=25</button>
               </div>
             </div>
           </div>
@@ -508,7 +509,7 @@
               </div>
               <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
                 <span class="text-slate-400 block text-[11px]">Tie-Break Risk</span>
-                <span class="text-sm font-mono font-bold text-emerald-400">0% (Odd K)</span>
+                <span id="tie-break-risk" class="text-sm font-mono font-bold text-emerald-400 transition-colors">0% (Odd K)</span>
               </div>
             </div>
           </div>
@@ -821,6 +822,7 @@
       const ctx = canvas.getContext('2d');
       const kSlider = document.getElementById('k-slider');
       const kSliderDisplay = document.getElementById('k-slider-display');
+      const kParityBadge = document.getElementById('k-parity-badge');
       const navKValue = document.getElementById('nav-k-value');
       const predictedClassName = document.getElementById('predicted-class-name');
       const predictionBadge = document.getElementById('prediction-badge');
@@ -833,6 +835,7 @@
       const voteBarRed = document.getElementById('vote-bar-red');
       const voteBarBlue = document.getElementById('vote-bar-blue');
       const kRadiusVal = document.getElementById('k-radius-val');
+      const tieBreakRisk = document.getElementById('tie-break-risk');
       const queryCoords = document.getElementById('query-coords');
       const trapCalloutCard = document.getElementById('trap-callout-card');
       const trapStatusTitle = document.getElementById('trap-status-title');
@@ -912,8 +915,17 @@
           else blueCount++;
         });
 
-        const winner = redCount > blueCount ? 'red' : 'blue';
-        const confidence = Math.round((Math.max(redCount, blueCount) / state.k) * 100);
+        let winner = 'tie';
+        if (redCount > blueCount) {
+          winner = 'red';
+        } else if (blueCount > redCount) {
+          winner = 'blue';
+        } else {
+          winner = 'tie';
+        }
+
+        const isTie = redCount === blueCount;
+        const confidence = state.k > 0 ? Math.round((Math.max(redCount, blueCount) / state.k) * 100) : 0;
 
         return {
           neighbors: kNeighbors,
@@ -921,7 +933,8 @@
           redCount,
           blueCount,
           winner,
-          confidence
+          confidence,
+          isTie
         };
       }
 
@@ -962,9 +975,13 @@
           if (knn.winner === 'red') {
             grad.addColorStop(0, 'rgba(244, 63, 94, 0.16)');
             grad.addColorStop(1, 'rgba(244, 63, 94, 0.02)');
-          } else {
+          } else if (knn.winner === 'blue') {
             grad.addColorStop(0, 'rgba(14, 165, 233, 0.16)');
             grad.addColorStop(1, 'rgba(14, 165, 233, 0.02)');
+          } else {
+            // 50-50 Tie deadlock: Amber warning glow!
+            grad.addColorStop(0, 'rgba(251, 191, 36, 0.22)');
+            grad.addColorStop(1, 'rgba(251, 191, 36, 0.03)');
           }
           ctx.fillStyle = grad;
           ctx.beginPath();
@@ -972,7 +989,9 @@
           ctx.fill();
 
           // Outer dashed border
-          ctx.strokeStyle = knn.winner === 'red' ? 'rgba(244, 63, 94, 0.75)' : 'rgba(14, 165, 233, 0.75)';
+          ctx.strokeStyle = knn.winner === 'red' 
+            ? 'rgba(244, 63, 94, 0.75)' 
+            : (knn.winner === 'blue' ? 'rgba(14, 165, 233, 0.75)' : 'rgba(251, 191, 36, 0.9)');
           ctx.lineWidth = 1.8;
           ctx.setLineDash([5, 4]);
           ctx.beginPath();
@@ -1083,21 +1102,37 @@
         kSliderDisplay.textContent = state.k;
         navKValue.textContent = state.k;
 
+        // Dynamic Parity Badge (Odd vs Even)
+        if (kParityBadge) {
+          if (state.k % 2 === 0) {
+            kParityBadge.textContent = 'Even K (Tie Risk!)';
+            kParityBadge.className = 'text-[10px] px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-700 font-mono font-bold animate-pulse';
+          } else {
+            kParityBadge.textContent = 'Odd K';
+            kParityBadge.className = 'text-[10px] px-2 py-0.5 rounded bg-slate-800 text-sky-400 border border-slate-700 font-mono';
+          }
+        }
+
         // Query Coordinates
         queryCoords.textContent = `X: ${state.query.x.toFixed(2)}, Y: ${state.query.y.toFixed(2)}`;
 
         // Prediction Badge styling
-        if (knn.winner === 'red') {
+        if (knn.winner === 'tie') {
+          predictedClassName.textContent = 'Tie Deadlock! ⚖️';
+          predictionBadge.className = 'flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-amber-500/20 border border-amber-500/60 text-amber-300 font-black text-base sm:text-lg shadow-lg shadow-amber-950 transition-colors animate-pulse';
+          predictionDot.className = 'w-3.5 h-3.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400/80 animate-ping';
+          confidenceScore.textContent = '50% (Tie)';
+        } else if (knn.winner === 'red') {
           predictedClassName.textContent = 'Cat 🐱';
           predictionBadge.className = 'flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-300 font-black text-lg shadow-lg shadow-rose-950 transition-colors';
           predictionDot.className = 'w-3.5 h-3.5 rounded-full bg-rose-400 shadow-sm shadow-rose-400/80';
+          confidenceScore.textContent = `${knn.confidence}%`;
         } else {
           predictedClassName.textContent = 'Dog 🐶';
           predictionBadge.className = 'flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-sky-500/20 border border-sky-500/40 text-sky-300 font-black text-lg shadow-lg shadow-sky-950 transition-colors';
           predictionDot.className = 'w-3.5 h-3.5 rounded-full bg-sky-400 shadow-sm shadow-sky-400/80';
+          confidenceScore.textContent = `${knn.confidence}%`;
         }
-
-        confidenceScore.textContent = `${knn.confidence}%`;
 
         // Vote counts & progress bar
         votesRedCount.textContent = knn.redCount;
@@ -1112,6 +1147,20 @@
         // K-Radius distance value normalized
         const normalizedRadius = (knn.kDistancePx / Math.min(canvasWidth, canvasHeight)).toFixed(3);
         kRadiusVal.textContent = normalizedRadius;
+
+        // Tie-Break Risk Readout
+        if (tieBreakRisk) {
+          if (knn.isTie) {
+            tieBreakRisk.textContent = '100% (DEADLOCK!)';
+            tieBreakRisk.className = 'text-sm font-mono font-bold text-rose-400 animate-pulse';
+          } else if (state.k % 2 === 0) {
+            tieBreakRisk.textContent = 'High (Even K)';
+            tieBreakRisk.className = 'text-sm font-mono font-bold text-amber-400';
+          } else {
+            tieBreakRisk.textContent = '0% (Odd K)';
+            tieBreakRisk.className = 'text-sm font-mono font-bold text-emerald-400';
+          }
+        }
 
         // Highlight preset buttons
         kPresetBtns.forEach(btn => {
@@ -1128,12 +1177,22 @@
         const distToRogue = rogue ? Math.hypot(state.query.x - rogue.x, state.query.y - rogue.y) : 999;
         const isNearOutlier = distToRogue < 0.10;
 
-        if (isNearOutlier) {
+        if (knn.isTie) {
+          trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-amber-500/70 bg-amber-950/40 transition-all duration-300 space-y-2 shadow-xl shadow-amber-950/50 animate-pulse';
+          trapStatusTitle.textContent = '⚖️ Tie Deadlock! (Why Even K Fails)';
+          trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400';
+          trapStatusText.innerHTML = `At <strong class="text-white font-mono">Even K = ${state.k}</strong>, we have an exact tie: <strong class="text-rose-400 font-mono">${knn.redCount} Cat${knn.redCount > 1 ? 's' : ''} 🐱</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dog${knn.blueCount > 1 ? 's' : ''} 🐶</strong> (50% - 50%)! The model has NO winner and is forced to flip a coin. <span class="text-amber-300 font-semibold">This is why Even K is strictly avoided in binary classification!</span>`;
+        } else if (isNearOutlier) {
           if (state.k === 1) {
             trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-rose-500/60 bg-rose-950/30 transition-all duration-300 space-y-2 shadow-xl shadow-rose-950/40';
             trapStatusTitle.textContent = '🚨 Sneaky Cat Trap! (Fooled by Outlier)';
             trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-400';
             trapStatusText.innerHTML = `At <strong class="text-white font-mono">K=1</strong>, the lone sneaky cat commands <strong>100% of the vote</strong>! This tricks our model into declaring mystery pet Q as a <span class="text-rose-400 font-bold">CAT 🐱</span> even though it is surrounded by dogs!`;
+          } else if (state.k % 2 === 0) {
+            trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-amber-500/50 bg-amber-950/20 transition-all duration-300 space-y-2';
+            trapStatusTitle.textContent = `⚠️ Even K Boundary (${state.k} Neighbors)`;
+            trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400';
+            trapStatusText.innerHTML = `At <strong class="text-white font-mono">Even K = ${state.k}</strong>, dogs lead (${knn.blueCount} Dogs vs ${knn.redCount} Cat), but because K is an even number, moving Q slightly towards cluster boundaries exposes the algorithm to 50-50 tie deadlocks!`;
           } else if (state.k <= 3) {
             trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-amber-500/50 bg-amber-950/20 transition-all duration-300 space-y-2';
             trapStatusTitle.textContent = '⚠️ Transition Zone (K=3)';
@@ -1146,10 +1205,17 @@
             trapStatusText.innerHTML = `At <strong class="text-white font-mono">K=${state.k}</strong>, the friendly dogs (${knn.blueCount} Dogs vs ${knn.redCount} Cat) easily outvote the sneaky cat <strong>${knn.blueCount} to ${knn.redCount}</strong>! Mystery pet Q is correctly recognized as a <span class="text-sky-400 font-bold">DOG 🐶</span>!`;
           }
         } else {
-          trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-slate-800 bg-slate-900/40 transition-all duration-300 space-y-2';
-          trapStatusTitle.textContent = 'Voting Pool Status';
-          trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400';
-          trapStatusText.innerHTML = `Current voting pool: <strong class="text-rose-400 font-mono">${knn.redCount} Cats 🐱</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dogs 🐶</strong>. Drag mystery pet Q or click "Trigger Sneaky Cat Trap" to test!`;
+          if (state.k % 2 === 0) {
+            trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-amber-500/40 bg-slate-900/40 transition-all duration-300 space-y-2';
+            trapStatusTitle.textContent = 'Even K Warning';
+            trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400';
+            trapStatusText.innerHTML = `Current pool: <strong class="text-rose-400 font-mono">${knn.redCount} Cats 🐱</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dogs 🐶</strong> at <strong class="text-white font-mono">Even K = ${state.k}</strong>. Drag mystery pet Q between the clusters or set K=2 at the Sneaky Cat Trap to trigger an exact 50-50 tie deadlock!`;
+          } else {
+            trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-slate-800 bg-slate-900/40 transition-all duration-300 space-y-2';
+            trapStatusTitle.textContent = 'Voting Pool Status';
+            trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400';
+            trapStatusText.innerHTML = `Current voting pool: <strong class="text-rose-400 font-mono">${knn.redCount} Cats 🐱</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dogs 🐶</strong>. Drag mystery pet Q or click "Trigger Sneaky Cat Trap" to test!`;
+          }
         }
 
         // Keep Scrubber synced on the Error Chart
@@ -1280,8 +1346,24 @@
         updateChartScrubber();
       }
 
+      function getChartDataForK(kVal) {
+        const exact = errorData.find(item => item.k === kVal);
+        if (exact) return exact;
+        const lower = [...errorData].reverse().find(item => item.k < kVal) || errorData[0];
+        const upper = errorData.find(item => item.k > kVal) || errorData[errorData.length - 1];
+        const t = (kVal - lower.k) / (upper.k - lower.k);
+        const train = lower.train + t * (upper.train - lower.train);
+        const val = lower.val + t * (upper.val - lower.val);
+        return {
+          k: kVal,
+          train,
+          val,
+          desc: (kVal % 2 === 0) ? "⚠️ Even K (Tie Deadlock Risk)" : "Interpolated"
+        };
+      }
+
       function showTooltipForK(kVal) {
-        const d = errorData.find(item => item.k === kVal) || errorData[2];
+        const d = getChartDataForK(kVal);
         const x = kToX(d.k);
         const yVal = errToY(d.val);
 
@@ -1323,7 +1405,7 @@
       }
 
       function updateChartScrubber() {
-        const d = errorData.find(item => item.k === state.k) || errorData[2];
+        const d = getChartDataForK(state.k);
         const x = kToX(d.k);
         const yVal = errToY(d.val);
         const yTrain = errToY(d.train);
@@ -1340,9 +1422,7 @@
 
       // --- STATE MUTATION CONTROLS ---
       function setK(newK) {
-        // Enforce odd boundaries [1, 25]
         newK = Math.max(1, Math.min(25, newK));
-        if (newK % 2 === 0) newK += 1;
         state.k = newK;
         render();
       }
