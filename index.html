@@ -118,10 +118,11 @@
     </section>
 
     <!-- SECTION 1: UNDERSTANDING 'K' AND 'OUTLIERS' (BINARY WAR ANALOGY) -->
-    <section id="intuition" class="scroll-mt-20">
+    <section id="intuition" class="scroll-mt-20 space-y-8">
+      <!-- BOX 1: THE TWO TERMS (2 SUB-BOXES) -->
       <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
         <!-- Top accent decoration -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 via-sky-500 to-emerald-500"></div>
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-500 via-indigo-400 to-rose-500"></div>
 
         <div class="max-w-5xl mb-8">
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight whitespace-normal sm:whitespace-nowrap">
@@ -188,81 +189,77 @@
           </div>
 
         </div>
+      </div>
 
-        <!-- What K values shouldn't be taken -->
-        <div class="mt-8 pt-8 border-t border-slate-800/80">
-          <div class="text-sm font-bold text-white mb-4 flex items-center gap-2">
-            <span class="text-amber-400">⚠️</span>
-            <span>Some examples of what 'K' values shouldn't be taken</span>
+      <!-- BOX 2: EXAMPLES OF WHAT K VALUES SHOULDN'T BE TAKEN -->
+      <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
+        <!-- Top accent decoration -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-rose-500 to-purple-500"></div>
+
+        <div class="mb-6 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-lg text-amber-400">
+            ⚠️
           </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <!-- Box 1: Even numbers as K -->
-            <div class="p-4 rounded-2xl bg-amber-950/20 border border-amber-900/40 flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between font-bold text-amber-400 mb-1">
-                  <span>1. Even numbers as K</span>
-                  <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-amber-900/40 text-amber-300">Tie Deadlock</span>
-                </div>
-                <p class="text-slate-300 leading-relaxed mt-2">
-                  In a 2-class problem (Cats vs. Dogs), an even number like <span class="font-mono text-amber-300 font-semibold">K = 2</span> or <span class="font-mono text-amber-300 font-semibold">K = 4</span> can cause an equal tie (2 Cats vs. 2 Dogs). The model gets stuck in a 50-50 deadlock and has to guess or flip a coin!
-                </p>
-              </div>
-              <div class="mt-3 pt-2 border-t border-amber-900/30 text-[11px] text-amber-300 font-medium">
-                ⚠️ Risk: 50-50 ties force random guessing or coin tosses.
-              </div>
-            </div>
-
-            <!-- Box 2: K = 1 -->
-            <div class="p-4 rounded-2xl bg-rose-950/20 border border-rose-900/40 flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between font-bold text-rose-400 mb-1">
-                  <span>2. K = 1 (Single Neighbor)</span>
-                  <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-rose-900/40 text-rose-300">Overfitting</span>
-                </div>
-                <p class="text-slate-300 leading-relaxed mt-2">
-                  Asks only 1 closest pet. If standing near that 1 sneaky cat outlier sitting by the dogs, the model gets tricked 100% of the time! It memorizes pure noise instead of the real neighborhood.
-                </p>
-              </div>
-              <div class="mt-3 pt-2 border-t border-rose-900/30 text-[11px] text-rose-300 font-medium">
-                🚨 1 sneaky cat outlier commands 100% of the decision.
-              </div>
-            </div>
-
-            <!-- Box 3: K = N (K = 25) -->
-            <div class="p-4 rounded-2xl bg-purple-950/20 border border-purple-900/40 flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between font-bold text-purple-400 mb-1">
-                  <span>3. K = N (K = 25: All Pets)</span>
-                  <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-purple-900/40 text-purple-300">Underfitting</span>
-                </div>
-                <p class="text-slate-300 leading-relaxed mt-2">
-                  Asks all N = 25 pets across the entire dataset! It completely ignores who is close by and simply counts whoever has more total pets (13 Cats vs. 12 Dogs &rarr; predicts Cat everywhere).
-                </p>
-              </div>
-              <div class="mt-3 pt-2 border-t border-purple-900/30 text-[11px] text-purple-300 font-medium">
-                ⚠️ Neighborhood location is completely lost; over-smoothed.
-              </div>
-            </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              Some examples of what 'K' values shouldn't be taken
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">Critical edge cases to avoid when choosing K in binary classification</p>
           </div>
         </div>
 
-        <!-- Seamless Bridge to Practical Section -->
-        <div class="mt-8 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-sky-950/40 to-slate-900 border border-sky-800/40 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-sm">
-              &darr;
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+          <!-- Box 1: Even numbers as K -->
+          <div class="p-5 rounded-2xl bg-amber-950/20 border border-amber-900/40 flex flex-col justify-between hover:border-amber-700/60 transition">
             <div>
-              <div class="font-bold text-white text-sm">Now, see the 25 Pets in our 2D Playground!</div>
-              <div class="text-xs text-slate-400">See 12 Cats, 12 Dogs, spot the 1 Sneaky Cat near the dogs, and test the Sneaky Cat Trap live.</div>
+              <div class="flex items-center justify-between font-bold text-amber-400 mb-1.5">
+                <span class="text-sm">1. Even numbers as K</span>
+                <span class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-amber-900/50 text-amber-300 border border-amber-800/60">Tie Deadlock</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed mt-2 text-xs">
+                In a 2-class problem (Cats vs. Dogs), an even number like <span class="font-mono text-amber-300 font-semibold">K = 2</span> or <span class="font-mono text-amber-300 font-semibold">K = 4</span> can cause an equal tie (2 Cats vs. 2 Dogs). The model gets stuck in a 50-50 deadlock and has to guess or flip a coin!
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-amber-900/40 text-[11px] text-amber-300 font-medium flex items-center gap-1.5">
+              <span>⚠️</span>
+              <span>Risk: 50-50 ties force random guessing or coin tosses.</span>
             </div>
           </div>
-          <a href="#playground" class="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs shadow-lg shadow-sky-500/20 transition whitespace-nowrap">
-            Launch 2D Playground &rarr;
-          </a>
-        </div>
 
+          <!-- Box 2: K = 1 -->
+          <div class="p-5 rounded-2xl bg-rose-950/20 border border-rose-900/40 flex flex-col justify-between hover:border-rose-700/60 transition">
+            <div>
+              <div class="flex items-center justify-between font-bold text-rose-400 mb-1.5">
+                <span class="text-sm">2. K = 1 (Single Neighbor)</span>
+                <span class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-rose-900/50 text-rose-300 border border-rose-800/60">Overfitting</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed mt-2 text-xs">
+                Asks only 1 closest pet. If standing near that 1 sneaky cat outlier sitting by the dogs, the model gets tricked 100% of the time! It memorizes pure noise instead of the real neighborhood.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-rose-900/40 text-[11px] text-rose-300 font-medium flex items-center gap-1.5">
+              <span>🚨</span>
+              <span>1 sneaky cat outlier commands 100% of the decision.</span>
+            </div>
+          </div>
+
+          <!-- Box 3: K = N (K = 25) -->
+          <div class="p-5 rounded-2xl bg-purple-950/20 border border-purple-900/40 flex flex-col justify-between hover:border-purple-700/60 transition">
+            <div>
+              <div class="flex items-center justify-between font-bold text-purple-400 mb-1.5">
+                <span class="text-sm">3. K = N (K = 25: All Pets)</span>
+                <span class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-purple-900/50 text-purple-300 border border-purple-800/60">Underfitting</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed mt-2 text-xs">
+                Asks all N = 25 pets across the entire dataset! It completely ignores who is close by and simply counts whoever has more total pets (13 Cats vs. 12 Dogs &rarr; predicts Cat everywhere).
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-purple-900/40 text-[11px] text-purple-300 font-medium flex items-center gap-1.5">
+              <span>⚠️</span>
+              <span>Neighborhood location is completely lost; over-smoothed.</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
