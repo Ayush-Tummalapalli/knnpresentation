@@ -124,11 +124,6 @@
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 via-sky-500 to-emerald-500"></div>
 
         <div class="max-w-5xl mb-8">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-950/80 border border-sky-800/60 text-sky-400 mb-3">
-            <span>Binary Classification</span>
-            <span class="text-slate-600">•</span>
-            <span>Cats 🐱 vs. Dogs 🐶 (N = 25)</span>
-          </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight whitespace-normal sm:whitespace-nowrap">
             The Two Terms Explained Simply: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-rose-400">"K"</span> &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300">"Outlier"</span>
           </h2>
@@ -138,79 +133,57 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           <!-- Card 1: What is 'K'? -->
-          <div class="bg-slate-900/90 rounded-3xl p-7 border border-sky-500/30 relative group hover:border-sky-500/50 transition space-y-4 shadow-xl">
-            <div class="flex items-center justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-2xl">
-                🐾
-              </div>
-              <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-sky-950 text-sky-300 border border-sky-800">
-                Term 1
-              </span>
-            </div>
-
+          <div class="bg-slate-900/90 rounded-3xl p-7 border border-sky-500/30 relative group hover:border-sky-500/50 transition space-y-4 shadow-xl flex flex-col justify-between">
             <div>
-              <h3 class="text-xl font-bold text-white">What is "K"?</h3>
-              <div class="text-xs font-semibold text-sky-400 mt-0.5">How Many Nearby Pets We Ask for Help</div>
-            </div>
-
-            <p class="text-xs text-slate-300 leading-relaxed">
-              In our example, <strong class="text-white font-mono text-sm">K</strong> is simply <strong>how many nearby pets we ask</strong> before making a decision by majority vote.
-            </p>
-
-            <!-- Classification Scenario -->
-            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 text-xs">
-              <div class="font-bold text-sky-300 flex items-center gap-1.5">
-                <span>🎯</span>
-                <span>The Classification Scenario:</span>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-11 h-11 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center font-mono font-bold text-sky-400 text-lg shadow-inner">
+                  K
+                </div>
+                <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-sky-950 text-sky-300 border border-sky-800">
+                  Term 1
+                </span>
               </div>
-              <p class="text-slate-400 leading-relaxed">
-                A mystery pet <strong class="text-amber-300 font-bold">Q ❓</strong> appears. <strong class="text-slate-200">K is how many surrounding pets we poll:</strong>
-              </p>
-              <ul class="text-[11px] text-slate-400 space-y-1.5 pt-1">
-                <li>• <strong class="text-rose-400 font-mono">K = 1 (Single Neighbor):</strong> Asks only 1 closest pet. Very risky! If that pet happens to be the sneaky runaway cat, we get tricked.</li>
-                <li>• <strong class="text-emerald-400 font-mono">K = 5 (Small Group):</strong> Asks the 5 closest pets. In our dataset of N = 25 pets, <span class="text-emerald-300 font-bold">K = &radic;25 = 5</span> is our magical sweet spot where honest majority wins!</li>
-                <li>• <strong class="text-purple-400 font-mono">K = 25 (All Pets):</strong> Asks all 25 pets in the dataset (K = N). It ignores who is close by and just counts the whole group!</li>
-              </ul>
+
+              <h3 class="text-2xl font-bold text-white tracking-tight mb-4">What is "K"?</h3>
+
+              <div class="space-y-4">
+                <p class="text-base text-slate-200 leading-relaxed font-medium">
+                  <span class="text-sky-300 font-semibold">'K'</span> is simply the number of neighbors the algorithm should consider before making a decision
+                </p>
+
+                <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center gap-2.5">
+                  <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                  <span class="text-sm font-mono font-bold text-sky-300">We can take, K = 1 to N</span>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Card 2: What is an 'Outlier'? -->
-          <div class="bg-slate-900/90 rounded-3xl p-7 border border-rose-500/30 relative group hover:border-rose-500/50 transition space-y-4 shadow-xl">
-            <div class="flex items-center justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-2xl">
-                🐱
-              </div>
-              <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-rose-950 text-rose-300 border border-rose-800">
-                Term 2
-              </span>
-            </div>
-
+          <div class="bg-slate-900/90 rounded-3xl p-7 border border-rose-500/30 relative group hover:border-rose-500/50 transition space-y-4 shadow-xl flex flex-col justify-between">
             <div>
-              <h3 class="text-xl font-bold text-white">What is an "Outlier"?</h3>
-              <div class="text-xs font-semibold text-rose-400 mt-0.5">The Sneaky Cat Sitting Near the Dogs</div>
-            </div>
-
-            <p class="text-xs text-slate-300 leading-relaxed">
-              An <strong class="text-white font-mono text-sm">Outlier</strong> is an odd one out—a single data point from one group sitting far away, right next to the rival group.
-            </p>
-
-            <!-- Sneaky Cat Scenario -->
-            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 text-xs">
-              <div class="font-bold text-rose-300 flex items-center gap-1.5">
-                <span>🚨</span>
-                <span>The Sneaky Cat Near the Dogs:</span>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-11 h-11 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center font-mono font-bold text-rose-400 text-lg shadow-inner">
+                  !
+                </div>
+                <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-rose-950 text-rose-300 border border-rose-800">
+                  Term 2
+                </span>
               </div>
-              <p class="text-slate-400 leading-relaxed">
-                Right next to the <strong class="text-sky-300">12 Dogs</strong>, there is <strong class="text-rose-400">1 sneaky red cat 🐱</strong> sitting all alone! That single runaway cat is the <strong>Outlier</strong>.
-              </p>
-              <div class="p-2.5 rounded-xl bg-rose-950/30 border border-rose-900/40 text-[11px] text-slate-300 mt-1">
-                How does KNN react if our mystery pet Q stands right beside this sneaky cat?
+
+              <h3 class="text-2xl font-bold text-white tracking-tight mb-4">What is an "Outlier"?</h3>
+
+              <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 text-sm text-slate-200 leading-relaxed">
+                <p class="font-medium text-rose-300">
+                  'Outlier' generally means odd one-out,
+                </p>
+                <p class="text-slate-300">
+                  A data point belonging to a particular class sitting far away near to the rival class.
+                </p>
+                <div class="pt-2 border-t border-slate-800/80 text-rose-300/90 font-medium">
+                  Outlier can effect the decision of KNN algorithm, if 'k' is not choosen appropriately.
+                </div>
               </div>
-              <p class="text-[11px] text-slate-400 leading-relaxed pt-1">
-                • <strong class="text-white font-mono">At K = 1:</strong> We only ask the single closest pet (the sneaky cat). The cat meows, so the model declares: "It's a <strong class="text-rose-400 font-bold">CAT 🐱</strong>!" We were completely fooled! <span class="text-rose-400 font-semibold">(Sensitive to Outlier)</span>.
-                <br />
-                • <strong class="text-white font-mono">At K = 5:</strong> We ask the 5 closest pets: 4 dogs and 1 sneaky cat. The 4 dogs outvote the cat <strong class="text-emerald-300 font-bold">4-to-1</strong> and correctly declare: "It's a <strong class="text-sky-400 font-bold">DOG 🐶</strong>!" <span class="text-emerald-400 font-semibold">(Robust &amp; Smart / K = &radic;25 = 5)</span>.
-              </p>
             </div>
           </div>
 
@@ -339,19 +312,19 @@
               <div class="flex items-center space-x-4">
                 <span class="flex items-center gap-1.5">
                   <span class="w-3 h-3 rounded-full bg-rose-500 inline-block shadow-sm shadow-rose-500/50"></span>
-                  <span class="font-medium text-slate-200">Cats 🐱 (12 Red)</span>
+                  <span class="font-medium text-slate-200">Cats (12 Red)</span>
                 </span>
                 <span class="flex items-center gap-1.5">
                   <span class="w-3 h-3 rounded-full bg-sky-500 inline-block shadow-sm shadow-sky-500/50"></span>
-                  <span class="font-medium text-slate-200">Dogs 🐶 (12 Blue)</span>
+                  <span class="font-medium text-slate-200">Dogs (12 Blue)</span>
                 </span>
                 <span class="flex items-center gap-1.5">
                   <span class="w-3 h-3 rounded-full border-2 border-amber-400 bg-amber-400/20 inline-block"></span>
-                  <span class="font-medium text-amber-300">Mystery Pet Q ❓</span>
+                  <span class="font-medium text-amber-300">Mystery Point Q ❓</span>
                 </span>
               </div>
               <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 font-mono">
-                <span>Click / Drag pet Q</span>
+                <span>Click / Drag point Q</span>
               </div>
             </div>
 
@@ -362,7 +335,7 @@
               <!-- Outlier Pointer Callout Overlay -->
               <div id="outlier-annotation" class="absolute pointer-events-none transition-all duration-300 opacity-95 hidden sm:flex items-center gap-2 bg-slate-900/90 border border-rose-500/60 text-rose-300 px-2.5 py-1 rounded-lg text-xs shadow-xl backdrop-blur-sm">
                 <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
-                <span>🐱 Sneaky Cat (Outlier)</span>
+                <span>Sneaky Cat (Outlier)</span>
               </div>
 
               <!-- Interactive Hint Pill -->
@@ -446,7 +419,7 @@
               <div class="flex items-center justify-between">
                 <div id="prediction-badge" class="flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-sky-500/20 border border-sky-500/40 text-sky-300 font-black text-lg shadow-lg shadow-sky-950 transition-colors">
                   <span id="prediction-dot" class="w-3.5 h-3.5 rounded-full bg-sky-400 shadow-sm shadow-sky-400/80"></span>
-                  <span id="predicted-class-name">Dog 🐶</span>
+                  <span id="predicted-class-name">Dog</span>
                 </div>
                 <div class="text-right">
                   <div class="text-xs text-slate-400">Confidence</div>
@@ -1095,12 +1068,12 @@
           predictionDot.className = 'w-3.5 h-3.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400/80 animate-ping';
           confidenceScore.textContent = '50% (Tie)';
         } else if (knn.winner === 'red') {
-          predictedClassName.textContent = 'Cat 🐱';
+          predictedClassName.textContent = 'Cat';
           predictionBadge.className = 'flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-300 font-black text-lg shadow-lg shadow-rose-950 transition-colors';
           predictionDot.className = 'w-3.5 h-3.5 rounded-full bg-rose-400 shadow-sm shadow-rose-400/80';
           confidenceScore.textContent = `${knn.confidence}%`;
         } else {
-          predictedClassName.textContent = 'Dog 🐶';
+          predictedClassName.textContent = 'Dog';
           predictionBadge.className = 'flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-sky-500/20 border border-sky-500/40 text-sky-300 font-black text-lg shadow-lg shadow-sky-950 transition-colors';
           predictionDot.className = 'w-3.5 h-3.5 rounded-full bg-sky-400 shadow-sm shadow-sky-400/80';
           confidenceScore.textContent = `${knn.confidence}%`;
@@ -1153,13 +1126,13 @@
           trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-amber-500/70 bg-amber-950/40 transition-all duration-300 space-y-2 shadow-xl shadow-amber-950/50 animate-pulse';
           trapStatusTitle.textContent = '⚖️ Tie Deadlock! (Why Even K Fails)';
           trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400';
-          trapStatusText.innerHTML = `At <strong class="text-white font-mono">Even K = ${state.k}</strong>, we have an exact tie: <strong class="text-rose-400 font-mono">${knn.redCount} Cat${knn.redCount > 1 ? 's' : ''} 🐱</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dog${knn.blueCount > 1 ? 's' : ''} 🐶</strong> (50% - 50%)! The model has NO winner and is forced to flip a coin. <span class="text-amber-300 font-semibold">This is why Even K is strictly avoided in binary classification!</span>`;
+          trapStatusText.innerHTML = `At <strong class="text-white font-mono">Even K = ${state.k}</strong>, we have an exact tie: <strong class="text-rose-400 font-mono">${knn.redCount} Cat${knn.redCount > 1 ? 's' : ''}</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dog${knn.blueCount > 1 ? 's' : ''}</strong> (50% - 50%)! The model has NO winner and is forced to flip a coin. <span class="text-amber-300 font-semibold">This is why Even K is strictly avoided in binary classification!</span>`;
         } else if (isNearOutlier) {
           if (state.k === 1) {
             trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-rose-500/60 bg-rose-950/30 transition-all duration-300 space-y-2 shadow-xl shadow-rose-950/40';
             trapStatusTitle.textContent = '🚨 Sneaky Cat Trap! (Fooled by Outlier)';
             trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-400';
-            trapStatusText.innerHTML = `At <strong class="text-white font-mono">K=1</strong>, the lone sneaky cat commands <strong>100% of the vote</strong>! This tricks our model into declaring mystery pet Q as a <span class="text-rose-400 font-bold">CAT 🐱</span> even though it is surrounded by dogs!`;
+            trapStatusText.innerHTML = `At <strong class="text-white font-mono">K=1</strong>, the lone sneaky cat commands <strong>100% of the vote</strong>! This tricks our model into declaring mystery pet Q as a <span class="text-rose-400 font-bold">CAT</span> even though it is surrounded by dogs!`;
           } else if (state.k % 2 === 0) {
             trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-amber-500/50 bg-amber-950/20 transition-all duration-300 space-y-2';
             trapStatusTitle.textContent = `⚠️ Even K Boundary (${state.k} Neighbors)`;
@@ -1174,19 +1147,19 @@
             trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-emerald-500/50 bg-emerald-950/20 transition-all duration-300 space-y-2 shadow-xl shadow-emerald-950/20';
             trapStatusTitle.textContent = '✅ Sneaky Cat Overruled! (Optimal K = √25 = 5)';
             trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400';
-            trapStatusText.innerHTML = `At <strong class="text-white font-mono">K=${state.k}</strong>, the friendly dogs (${knn.blueCount} Dogs vs ${knn.redCount} Cat) easily outvote the sneaky cat <strong>${knn.blueCount} to ${knn.redCount}</strong>! Mystery pet Q is correctly recognized as a <span class="text-sky-400 font-bold">DOG 🐶</span>!`;
+            trapStatusText.innerHTML = `At <strong class="text-white font-mono">K=${state.k}</strong>, the friendly dogs (${knn.blueCount} Dogs vs ${knn.redCount} Cat) easily outvote the sneaky cat <strong>${knn.blueCount} to ${knn.redCount}</strong>! Mystery pet Q is correctly recognized as a <span class="text-sky-400 font-bold">DOG</span>!`;
           }
         } else {
           if (state.k % 2 === 0) {
             trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-amber-500/40 bg-slate-900/40 transition-all duration-300 space-y-2';
             trapStatusTitle.textContent = 'Even K Warning';
             trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400';
-            trapStatusText.innerHTML = `Current pool: <strong class="text-rose-400 font-mono">${knn.redCount} Cats 🐱</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dogs 🐶</strong> at <strong class="text-white font-mono">Even K = ${state.k}</strong>. Drag mystery pet Q between the clusters or set K=2 at the Sneaky Cat Trap to trigger an exact 50-50 tie deadlock!`;
+            trapStatusText.innerHTML = `Current pool: <strong class="text-rose-400 font-mono">${knn.redCount} Cats</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dogs</strong> at <strong class="text-white font-mono">Even K = ${state.k}</strong>. Drag mystery pet Q between the clusters or set K=2 at the Sneaky Cat Trap to trigger an exact 50-50 tie deadlock!`;
           } else {
             trapCalloutCard.className = 'glass-panel p-5 rounded-3xl border border-slate-800 bg-slate-900/40 transition-all duration-300 space-y-2';
             trapStatusTitle.textContent = 'Voting Pool Status';
             trapStatusTitle.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400';
-            trapStatusText.innerHTML = `Current voting pool: <strong class="text-rose-400 font-mono">${knn.redCount} Cats 🐱</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dogs 🐶</strong>. Drag mystery pet Q or click "Trigger Sneaky Cat Trap" to test!`;
+            trapStatusText.innerHTML = `Current voting pool: <strong class="text-rose-400 font-mono">${knn.redCount} Cats</strong> vs <strong class="text-sky-400 font-mono">${knn.blueCount} Dogs</strong>. Drag mystery pet Q or click "Trigger Sneaky Cat Trap" to test!`;
           }
         }
 
