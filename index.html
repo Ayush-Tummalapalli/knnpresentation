@@ -191,7 +191,91 @@
         </div>
       </div>
 
-      <!-- BOX 2: EXAMPLES OF WHAT K VALUES SHOULDN'T BE TAKEN -->
+      <!-- BOX 2: OUR DATASET EXPLANATION -->
+      <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
+        <!-- Top accent decoration -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-500"></div>
+
+        <div class="mb-6 flex items-center justify-between flex-wrap gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono font-bold text-sm shadow-inner">
+              2D
+            </div>
+            <div>
+              <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                Our Dataset: Feature Space Setup
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Mapping Height &amp; Weight on a 2D plane</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-slate-900 text-slate-300 border border-slate-800">
+              N = 25
+            </span>
+            <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-rose-950/80 text-rose-300 border border-rose-800/60">
+              13 Cats
+            </span>
+            <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-sky-950/80 text-sky-300 border border-sky-800/60">
+              12 Dogs
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-sm">
+          <!-- Step 1: Dataset & Features -->
+          <div class="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>The Dataset</span>
+              </div>
+              <p class="text-slate-200 leading-relaxed">
+                Lets take an example dataset containing <strong class="text-rose-400">13 cats</strong>, <strong class="text-sky-400">12 dogs</strong> (<strong class="text-white font-mono">N = 25</strong>).
+              </p>
+              <p class="text-slate-300 leading-relaxed text-xs">
+                We plot them on a 2D graph by taking <strong class="text-white">Height</strong>, <strong class="text-white">Weight</strong> as input features.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-400">
+              Input Features: Height &amp; Weight
+            </div>
+          </div>
+
+          <!-- Step 2: Distribution -->
+          <div class="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-400">
+                <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                <span>Graph Placement</span>
+              </div>
+              <p class="text-slate-200 leading-relaxed">
+                Generally dogs are heavier and taller than cats, so the dogs would sit on the <strong class="text-sky-300 font-semibold">top-right</strong> of the graph and the cats would sit on the <strong class="text-rose-300 font-semibold">bottom-left</strong> of the graph.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-400">
+              Dogs: Top-Right &bull; Cats: Bottom-Left
+            </div>
+          </div>
+
+          <!-- Step 3: Outlier -->
+          <div class="p-5 rounded-2xl bg-rose-950/20 border border-rose-900/40 space-y-3 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-400">
+                <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+                <span>The Outlier Cat</span>
+              </div>
+              <p class="text-slate-200 leading-relaxed">
+                Imagine a cat (outlier) having almost same height and weight of a dog, therefore it would sit among the dogs on the graph.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-rose-900/40 text-[11px] font-mono text-rose-300 font-medium">
+              Sneaky Outlier sitting in Dogs territory
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOX 3: EXAMPLES OF WHAT K VALUES SHOULDN'T BE TAKEN -->
       <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
         <!-- Top accent decoration -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-rose-500 to-purple-500"></div>
