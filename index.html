@@ -110,38 +110,10 @@
       <div class="absolute -top-10 left-1/4 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
       <div class="absolute top-20 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
-      <div class="text-center max-w-4xl mx-auto space-y-4">
+      <div class="text-center max-w-4xl mx-auto">
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
           How to Choose <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-sky-300">K?</span> &amp; How is it sensitive to <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300">Outliers?</span>
         </h1>
-        <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">
-          <strong class="text-white font-semibold">K-Nearest Neighbors (KNN)</strong> is a simple, intuitive machine learning algorithm: to classify an unknown point, it looks at its <strong class="text-sky-400 font-semibold">closest neighbors</strong> and takes a majority vote. If most of its closest neighbors are dogs, it decides it's a dog! But two crucial questions decide whether KNN gets it right or gets completely fooled:
-        </p>
-      </div>
-
-      <!-- 2 Key Questions -->
-      <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
-          <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-sky-500/5 rounded-full group-hover:bg-sky-500/10 transition"></div>
-          <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/30 flex items-center justify-center font-bold text-lg mb-4">
-            1
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2">Question 1: How to Choose K?</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            How many surrounding neighbors should our model poll? Asking only 1 neighbor makes us vulnerable to noise; asking all 25 pets counts the entire group and ignores who is actually close!
-          </p>
-        </div>
-
-        <div class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
-          <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-rose-500/5 rounded-full group-hover:bg-rose-500/10 transition"></div>
-          <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center font-bold text-lg mb-4">
-            2
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2">Question 2: Sensitivity to Outliers</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            What happens when 1 sneaky cat sits right next to the dogs? At <span class="font-mono text-xs text-rose-300">K=1</span>, that lone runaway cat tricks the model into calling an obvious dog a cat!
-          </p>
-        </div>
       </div>
     </section>
 
